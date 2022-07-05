@@ -9,9 +9,9 @@ var serverPort = 8080;
 var port = process.env.PORT || serverPort;
 
 app
-  .listen(port || 8080, () => {
+  .listen(port, () => {
     // TODO: gestisci con log
-    console.log(`Server on su porta ${port || 8080}`);
+    console.log(`Server on su porta ${port}`);
   })
   .on("error", (e) => {
     // TODO: gestisci con log
