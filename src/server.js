@@ -6,7 +6,7 @@ import app from './app.js';
 dotenv.config();
 
 app
-  .listen(process.env.PORT, () => {
+  .listen(process.env.PORT || 8080, () => {
     // TODO: gestisci con log
     console.log(`Server on su porta ${process.env.PORT || 8080}`);
   })
