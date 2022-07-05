@@ -5,10 +5,13 @@ import app from './app.js';
 // const dotenv = require("dotenv");
 dotenv.config();
 
+var serverPort = 8080;
+var port = process.env.PORT || serverPort;
+
 app
-  .listen(process.env.PORT || 8080, () => {
+  .listen(port || 8080, () => {
     // TODO: gestisci con log
-    console.log(`Server on su porta ${process.env.PORT || 8080}`);
+    console.log(`Server on su porta ${port || 8080}`);
   })
   .on("error", (e) => {
     // TODO: gestisci con log
