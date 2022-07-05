@@ -1,2 +1,13 @@
-venv 
-__pycache__ 
+# dependencies
+/node_modules
+
+# testing
+
+# production
+/build
+
+# misc
+.DS_Store
+
+#logs
+/logs

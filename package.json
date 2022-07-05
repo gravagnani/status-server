@@ -1,0 +1,30 @@
+{
+  "name": "server-status",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/server.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gravagnani/status-server"
+  },
+  "type": "module",
+  "author": "GRavagnani",
+  "license": "ISC",
+  "homepage": "",
+  "dependencies": {
+    "@koa/router": "^10.1.1",
+    "dotenv": "^10.0.0",
+    "install": "^0.13.0",
+    "koa": "^2.13.4",
+    "koa-bodyparser": "^4.3.0",
+    "npm": "^8.3.0",
+    "pg": "^8.7.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
