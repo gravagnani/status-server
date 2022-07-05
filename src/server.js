@@ -8,7 +8,7 @@ dotenv.config();
 app
   .listen(process.env.PORT, () => {
     // TODO: gestisci con log
-    console.log(`Server on su porta ${process.env.PORT}`);
+    console.log(`Server on su porta ${process.env.PORT || 8080}`);
   })
   .on("error", (e) => {
     // TODO: gestisci con log
