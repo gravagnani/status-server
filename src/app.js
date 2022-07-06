@@ -1,7 +1,7 @@
 import Koa from 'koa';
 import bodyParser from 'koa-bodyparser';
 
-import routesV1 from './routes/routes.js';
+import routes from './routes/routes.js';
 
 var app = new Koa();
 
@@ -9,6 +9,6 @@ var app = new Koa();
 app.use(bodyParser());
 
 // ROUTES
-app.use(routesV1.routes()).use(routesV1.allowedMethods());
+app.use(routes.routes()).use(routes.allowedMethods());
 
 export default app;
