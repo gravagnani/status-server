@@ -11,6 +11,7 @@ export class ServerStatusDB extends EntityDB {
       text: `
         SELECT s.server_code, s.server_desc, s.last_keep_alive
         FROM public.server_status s
+        ORDER BY 1 ASC
         `,
     };
 
