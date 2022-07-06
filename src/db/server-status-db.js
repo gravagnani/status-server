@@ -3,7 +3,7 @@
  *
  * ServerStatusDB entity.
  */
-import { EntityDB } from '../entity-db.js';
+import { EntityDB } from './entity-db.js';
 
 export class ServerStatusDB extends EntityDB {
   async findAll() {

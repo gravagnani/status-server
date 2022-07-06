@@ -1,7 +1,7 @@
 import Router from '@koa/router';
 
-import { statuses } from '../../../constants/statuses.js';
-import { ServerStatusController } from '../../../controller/server-status/server-status-controller.js';
+import { statuses } from '../constants/statuses.js';
+import { ServerStatusController } from '../controller/server-status-controller.js';
 
 const router = new Router();
 

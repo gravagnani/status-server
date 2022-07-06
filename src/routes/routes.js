@@ -1,6 +1,6 @@
 import Router from '@koa/router';
 
-import serverStatus from './server-status/server-status.js';
+import serverStatus from './server-status.js';
 
 const router = new Router({
   prefix: "/",

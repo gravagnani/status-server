@@ -3,7 +3,7 @@
  *
  * User controller.
  */
-import { ServerStatusDB } from '../../db/server-status-db/server-status-db.js';
+import { ServerStatusDB } from '../db/server-status-db.js';
 
 export class ServerStatusController {
   async findAll() {
