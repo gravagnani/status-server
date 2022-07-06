@@ -1,7 +1,7 @@
 $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
 $headers.Add("Content-Type", "application/json")
 
-$url = "https://status-server-service.herokuapp.com/"
+$url = "https://status-server-service.herokuapp.com/expired=N"
 $body = "{`"server_code`": `"C1`"}"
 
 $wait = 300

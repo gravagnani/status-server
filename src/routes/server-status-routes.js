@@ -8,8 +8,13 @@ const router = new Router();
 router.get("/", async (ctx, next) => {
   const server_status_controller = new ServerStatusController();
 
+  const { expired } = ctx.request.query;
+
   try {
-    const server_status_list = await server_status_controller.findAll();
+    const server_status_list =
+      expired == "Y"
+        ? await server_status_controller.findExpired()
+        : await server_status_controller.findAll();
     ctx.status = statuses.OK;
     ctx.body = server_status_list;
   } catch (err) {
@@ -22,10 +27,12 @@ router.get("/", async (ctx, next) => {
 router.post("/", async (ctx, next) => {
   const server_status_controller = new ServerStatusController();
 
-  const {server_code} = ctx.request.body;
+  const { server_code } = ctx.request.body;
 
   try {
-    const server_status_list = await server_status_controller.updateKeepAlive(server_code);
+    const server_status_list = await server_status_controller.updateKeepAlive(
+      server_code
+    );
     ctx.status = statuses.OK;
     ctx.body = server_status_list;
   } catch (err) {
@@ -33,7 +40,6 @@ router.post("/", async (ctx, next) => {
     ctx.body = "Internal Server Error";
     console.error(err);
   }
-  
 });
 
 export default router;
