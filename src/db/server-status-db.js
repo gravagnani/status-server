@@ -36,7 +36,8 @@ export class ServerStatusDB extends EntityDB {
     const query = {
       text: `
         UPDATE public.server_status
-        SET last_keep_alive = NOW()
+        SET last_keep_alive = CURRENT_TIMESTAMP 
+          , next_send_mail = CURRENT_TIMESTAMP + CAST(period_send_mail || ' minutes' AS INTERVAL)
         WHERE server_code = $1
         RETURNING *
         `,
