@@ -36,7 +36,7 @@ export class ServerStatusDB extends EntityDB {
   async findExpired() {
     const query = {
       text: `
-        SELECT s.server_code, s.server_desc, s.last_keep_alive
+        SELECT s.server_code, s.server_desc, s.last_keep_alive, s.period_send_mail, s.next_send_mail, s.mail_from, s.mail_to
         FROM public.server_status s
         WHERE flag_active = 'Y'
           AND next_send_mail <= CURRENT_TIMESTAMP
