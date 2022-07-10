@@ -7,6 +7,8 @@ const router = new Router({
 });
 
 // SERVER_STATUS
-router.use("/", serverStatus.routes()).use(serverStatus.allowedMethods());
+router.use("", serverStatus.routes()).use(serverStatus.allowedMethods());
+
+console.log(router.stack);
 
 export default router;
