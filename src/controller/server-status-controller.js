@@ -35,4 +35,14 @@ export class ServerStatusController {
     });
     return server_status_list;
   }
+
+  async updateNextSendMail(server_code) {
+    const server_status_db = new ServerStatusDB();
+    const data = await server_status_db.updateNextSendMail(server_code);
+    const server_status_list = [];
+    data.forEach((u) => {
+      server_status_list.push(u);
+    });
+    return server_status_list;
+  }
 }

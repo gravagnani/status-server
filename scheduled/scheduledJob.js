@@ -32,11 +32,10 @@ function sendMail(mail_from, mail_to, server_code, server_desc) {
 
   var defaultClient = SibApiV3Sdk.ApiClient.instance;
 
-  // Configure API key authorization: api-key
   var apiKey = defaultClient.authentications["api-key"];
   apiKey.apiKey = process.env.SIB_API;
   var apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
-  var sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail(); // SendSmtpEmail | Values to send a transactional email
+  var sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
 
   sendSmtpEmail = {
     sender: { email: mail_from },
@@ -64,10 +63,12 @@ const main = async () => {
 
   expired.forEach((s) => {
     console.log("Sending mail for: " + s.server_code);
-    sendMail(s.mail_from, s.mail_to, s.server_code, s.server_desc);
+    s.mail_to.split(";").forEach((t) => {
+      sendMail(s.mail_from, t, s.server_code, s.server_desc);
+    });
+
+    // eventualmente aggiorna il next_send_mail
   });
-  // invia la mail ai destinatari
-  // eventualmente aggiorna il next_send_mail
 };
 
 main();
