@@ -1,6 +1,6 @@
-import dotenv from 'dotenv';
-import fetch from 'node-fetch';
-import SibApiV3Sdk from 'sib-api-v3-sdk';
+import dotenv from "dotenv";
+import fetch from "node-fetch";
+import SibApiV3Sdk from "sib-api-v3-sdk";
 
 dotenv.config();
 
@@ -58,6 +58,29 @@ function sendMail(mail_from, mail_to, server_code, server_desc) {
   );
 }
 
+const updateNextMail = async (server_code) => {
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  var raw = JSON.stringify({
+    server_code: server_code,
+  });
+
+  var requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
+
+  const url = "https://status-server-service.herokuapp.com/update-next-mail";
+
+  const response = await fetch(url, requestOptions);
+  const data = await response.json();
+
+  return await data;
+};
+
 const main = async () => {
   const expired = await getExpired();
 
@@ -65,9 +88,9 @@ const main = async () => {
     console.log("Sending mail for: " + s.server_code);
     s.mail_to.split(";").forEach((t) => {
       sendMail(s.mail_from, t, s.server_code, s.server_desc);
+      console.log("Updating Nexi Mail [" + server_code + "] ...");
+      await updateNextMail(s.server_code);
     });
-
-    // eventualmente aggiorna il next_send_mail
   });
 };
 
