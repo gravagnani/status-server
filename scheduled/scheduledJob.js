@@ -82,6 +82,9 @@ const updateNextMail = async (server_code) => {
 };
 
 const main = async () => {
+
+  console.log('Running Scheduled Job ...');
+
   const expired = await getExpired();
 
   expired.forEach((s) => {
