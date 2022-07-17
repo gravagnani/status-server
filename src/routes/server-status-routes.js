@@ -42,7 +42,7 @@ router.post("/", async (ctx, next) => {
   }
 });
 
-router.post("update", async (ctx, next) => {
+router.post("update-mail", async (ctx, next) => {
   const server_status_controller = new ServerStatusController();
 
   const { server_code } = ctx.request.body;
