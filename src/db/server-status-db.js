@@ -1,4 +1,4 @@
-import { EntityDB } from './entity-db.js';
+import { EntityDB } from "./entity-db.js";
 
 /**
  * NETLIFTER
@@ -65,6 +65,7 @@ export class ServerStatusDB extends EntityDB {
         UPDATE public.server_status
         SET last_keep_alive = CURRENT_TIMESTAMP 
           , next_send_mail = CURRENT_TIMESTAMP + CAST(timeout_send_mail || ' minutes' AS INTERVAL)
+          , last_update = CURRENT_TIMESTAMP
         WHERE server_code = $1
           AND flag_active = 'Y'
         RETURNING server_code, server_desc, last_keep_alive
@@ -93,6 +94,7 @@ export class ServerStatusDB extends EntityDB {
       text: `
         UPDATE public.server_status
         SET next_send_mail = CURRENT_TIMESTAMP + CAST(period_send_mail || ' minutes' AS INTERVAL)
+          , last_update = CURRENT_TIMESTAMP
         WHERE server_code = $1
         RETURNING server_code, server_desc, last_keep_alive, next_send_mail
         `,

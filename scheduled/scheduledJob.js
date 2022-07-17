@@ -1,6 +1,6 @@
-import dotenv from 'dotenv';
-import fetch from 'node-fetch';
-import SibApiV3Sdk from 'sib-api-v3-sdk';
+import dotenv from "dotenv";
+import fetch from "node-fetch";
+import SibApiV3Sdk from "sib-api-v3-sdk";
 
 dotenv.config();
 
@@ -14,10 +14,15 @@ const getExpired = async () => {
 
   const url = "https://status-server-service.herokuapp.com?expired=Y";
 
-  const response = await fetch(url, requestOptions);
-  const data = await response.json();
+  try {
+    const response = await fetch(url, requestOptions);
+    const data = await response.json();
+    return await data;
+  } catch (error) {
+    console.error("Get Expired Error: " + error);
+  }
 
-  return await data;
+  return null;
 };
 
 function sendMail(mail_from, mail_to, server_code, server_desc) {
@@ -28,7 +33,7 @@ function sendMail(mail_from, mail_to, server_code, server_desc) {
     server_code +
     "] " +
     server_desc +
-    " is not responding. Please check the status";
+    " is not responding. Please check the status.";
 
   var defaultClient = SibApiV3Sdk.ApiClient.instance;
 
@@ -50,7 +55,7 @@ function sendMail(mail_from, mail_to, server_code, server_desc) {
 
   apiInstance.sendTransacEmail(sendSmtpEmail).then(
     function (data) {
-      console.log("API called successfully. Returned data: " + data);
+      console.log("sendTransacEmail. Returned data: " + JSON.stringify(data));
     },
     function (error) {
       console.error(error);
@@ -58,16 +63,44 @@ function sendMail(mail_from, mail_to, server_code, server_desc) {
   );
 }
 
+const updateNextMail = async (server_code) => {
+  var raw = JSON.stringify({
+    server_code: server_code,
+  });
+
+  var requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: raw,
+    redirect: "follow",
+  };
+
+  const url = "https://status-server-service.herokuapp.com/update-next-mail";
+
+  try {
+    const response = await fetch(url, requestOptions);
+    const data = await response.json();
+    return await data;
+  } catch (error) {
+    console.error("Update Next Mail Error: " + error);
+  }
+
+  return null;
+};
+
 const main = async () => {
+  console.log("Running Scheduled Job ...");
+
   const expired = await getExpired();
 
-  expired.forEach((s) => {
+  expired.forEach(async (s) => {
     console.log("Sending mail for: " + s.server_code);
-    s.mail_to.split(";").forEach((t) => {
+    s.mail_to.split(";").forEach(async (t) => {
+      console.log("Sending mail for: " + s.server_code + " to: " + t);
       sendMail(s.mail_from, t, s.server_code, s.server_desc);
     });
-
-    // eventualmente aggiorna il next_send_mail
+    console.log("Updating Next Mail [" + s.server_code + "] ...");
+    const updated_mail = await updateNextMail(s.server_code);
   });
 };
 
